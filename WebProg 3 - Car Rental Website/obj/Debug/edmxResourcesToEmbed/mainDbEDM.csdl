@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bookings" EntityType="Model.Booking" />
+    <EntitySet Name="BrandModels" EntityType="Model.BrandModel" />
+    <EntitySet Name="CarBrands" EntityType="Model.CarBrand" />
+    <EntitySet Name="FuelTypes" EntityType="Model.FuelType" />
+    <EntitySet Name="GearboxTypes" EntityType="Model.GearboxType" />
+    <EntitySet Name="Users" EntityType="Model.User" />
+    <EntitySet Name="UserTypes" EntityType="Model.UserType" />
+    <EntitySet Name="Vehicles" EntityType="Model.Vehicle" />
+    <AssociationSet Name="FK_Bookings_User" Association="Model.FK_Bookings_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bookings_Vehicle" Association="Model.FK_Bookings_Vehicle">
+      <End Role="Vehicle" EntitySet="Vehicles" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BrandModels_CarBrands" Association="Model.FK_BrandModels_CarBrands">
+      <End Role="CarBrand" EntitySet="CarBrands" />
+      <End Role="BrandModel" EntitySet="BrandModels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vehicle_BrandModels" Association="Model.FK_Vehicle_BrandModels">
+      <End Role="BrandModel" EntitySet="BrandModels" />
+      <End Role="Vehicle" EntitySet="Vehicles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vehicle_CarBrands" Association="Model.FK_Vehicle_CarBrands">
+      <End Role="CarBrand" EntitySet="CarBrands" />
+      <End Role="Vehicle" EntitySet="Vehicles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vehicle_FuelType" Association="Model.FK_Vehicle_FuelType">
+      <End Role="FuelType" EntitySet="FuelTypes" />
+      <End Role="Vehicle" EntitySet="Vehicles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vehicle_GearboxType" Association="Model.FK_Vehicle_GearboxType">
+      <End Role="GearboxType" EntitySet="GearboxTypes" />
+      <End Role="Vehicle" EntitySet="Vehicles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_UserType" Association="Model.FK_User_UserType">
+      <End Role="UserType" EntitySet="UserTypes" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="BookingID" />
+    </Key>
+    <Property Name="BookingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="VehicleID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Model.FK_Bookings_User" FromRole="Booking" ToRole="User" />
+    <NavigationProperty Name="Vehicle" Relationship="Model.FK_Bookings_Vehicle" FromRole="Booking" ToRole="Vehicle" />
+  </EntityType>
+  <EntityType Name="BrandModel">
+    <Key>
+      <PropertyRef Name="ModelID" />
+    </Key>
+    <Property Name="ModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BrandID" Type="Int32" Nullable="false" />
+    <Property Name="ModelName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CarBrand" Relationship="Model.FK_BrandModels_CarBrands" FromRole="BrandModel" ToRole="CarBrand" />
+    <NavigationProperty Name="Vehicles" Relationship="Model.FK_Vehicle_BrandModels" FromRole="BrandModel" ToRole="Vehicle" />
+  </EntityType>
+  <EntityType Name="CarBrand">
+    <Key>
+      <PropertyRef Name="BrandID" />
+    </Key>
+    <Property Name="BrandID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BrandName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BrandModels" Relationship="Model.FK_BrandModels_CarBrands" FromRole="CarBrand" ToRole="BrandModel" />
+    <NavigationProperty Name="Vehicles" Relationship="Model.FK_Vehicle_CarBrands" FromRole="CarBrand" ToRole="Vehicle" />
+  </EntityType>
+  <EntityType Name="FuelType">
+    <Key>
+      <PropertyRef Name="FuelID" />
+    </Key>
+    <Property Name="FuelID" Type="Int32" Nullable="false" />
+    <Property Name="FuelType1" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Vehicles" Relationship="Model.FK_Vehicle_FuelType" FromRole="FuelType" ToRole="Vehicle" />
+  </EntityType>
+  <EntityType Name="GearboxType">
+    <Key>
+      <PropertyRef Name="GearboxID" />
+    </Key>
+    <Property Name="GearboxID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GearboxType1" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Vehicles" Relationship="Model.FK_Vehicle_GearboxType" FromRole="GearboxType" ToRole="Vehicle" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="FName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="LName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="Email" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="UserType" Type="Int16" />
+    <Property Name="Password" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+    <Property Name="DateReg" Type="DateTime" Precision="0" />
+    <Property Name="LicenseNum" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Name="salt" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Bookings" Relationship="Model.FK_Bookings_User" FromRole="User" ToRole="Booking" />
+    <NavigationProperty Name="UserType1" Relationship="Model.FK_User_UserType" FromRole="User" ToRole="UserType" />
+  </EntityType>
+  <EntityType Name="UserType">
+    <Key>
+      <PropertyRef Name="UserTypeID" />
+    </Key>
+    <Property Name="UserTypeID" Type="Int16" Nullable="false" />
+    <Property Name="UserType1" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="Model.FK_User_UserType" FromRole="UserType" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Vehicle">
+    <Key>
+      <PropertyRef Name="VehicleID" />
+    </Key>
+    <Property Name="VehicleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BrandID" Type="Int32" Nullable="false" />
+    <Property Name="ModelID" Type="Int32" Nullable="false" />
+    <Property Name="GearboxID" Type="Int32" Nullable="false" />
+    <Property Name="FuelID" Type="Int32" Nullable="false" />
+    <Property Name="Doors" Type="Int16" Nullable="false" />
+    <Property Name="Seats" Type="Int16" Nullable="false" />
+    <Property Name="Suitcases" Type="Int16" Nullable="false" />
+    <Property Name="Bags" Type="Int16" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Bookings" Relationship="Model.FK_Bookings_Vehicle" FromRole="Vehicle" ToRole="Booking" />
+    <NavigationProperty Name="BrandModel" Relationship="Model.FK_Vehicle_BrandModels" FromRole="Vehicle" ToRole="BrandModel" />
+    <NavigationProperty Name="CarBrand" Relationship="Model.FK_Vehicle_CarBrands" FromRole="Vehicle" ToRole="CarBrand" />
+    <NavigationProperty Name="FuelType" Relationship="Model.FK_Vehicle_FuelType" FromRole="Vehicle" ToRole="FuelType" />
+    <NavigationProperty Name="GearboxType" Relationship="Model.FK_Vehicle_GearboxType" FromRole="Vehicle" ToRole="GearboxType" />
+  </EntityType>
+  <Association Name="FK_Bookings_User">
+    <End Type="Model.User" Role="User" Multiplicity="1" />
+    <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bookings_Vehicle">
+    <End Type="Model.Vehicle" Role="Vehicle" Multiplicity="1" />
+    <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vehicle">
+        <PropertyRef Name="VehicleID" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="VehicleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BrandModels_CarBrands">
+    <End Type="Model.CarBrand" Role="CarBrand" Multiplicity="1" />
+    <End Type="Model.BrandModel" Role="BrandModel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarBrand">
+        <PropertyRef Name="BrandID" />
+      </Principal>
+      <Dependent Role="BrandModel">
+        <PropertyRef Name="BrandID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vehicle_BrandModels">
+    <End Type="Model.BrandModel" Role="BrandModel" Multiplicity="1" />
+    <End Type="Model.Vehicle" Role="Vehicle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BrandModel">
+        <PropertyRef Name="ModelID" />
+      </Principal>
+      <Dependent Role="Vehicle">
+        <PropertyRef Name="ModelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vehicle_CarBrands">
+    <End Type="Model.CarBrand" Role="CarBrand" Multiplicity="1" />
+    <End Type="Model.Vehicle" Role="Vehicle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarBrand">
+        <PropertyRef Name="BrandID" />
+      </Principal>
+      <Dependent Role="Vehicle">
+        <PropertyRef Name="BrandID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vehicle_FuelType">
+    <End Type="Model.FuelType" Role="FuelType" Multiplicity="1" />
+    <End Type="Model.Vehicle" Role="Vehicle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FuelType">
+        <PropertyRef Name="FuelID" />
+      </Principal>
+      <Dependent Role="Vehicle">
+        <PropertyRef Name="FuelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vehicle_GearboxType">
+    <End Type="Model.GearboxType" Role="GearboxType" Multiplicity="1" />
+    <End Type="Model.Vehicle" Role="Vehicle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GearboxType">
+        <PropertyRef Name="GearboxID" />
+      </Principal>
+      <Dependent Role="Vehicle">
+        <PropertyRef Name="GearboxID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_UserType">
+    <End Type="Model.UserType" Role="UserType" Multiplicity="0..1" />
+    <End Type="Model.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserType">
+        <PropertyRef Name="UserTypeID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="UserType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

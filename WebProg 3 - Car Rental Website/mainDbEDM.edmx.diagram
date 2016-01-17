@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="48d7dbe492ac4107922af6dfe9ad5a1a" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Booking" Width="1.5" PointX="7.5" PointY="3.25" />
+        <EntityTypeShape EntityType="Model.BrandModel" Width="1.5" PointX="3" PointY="3.375" />
+        <EntityTypeShape EntityType="Model.CarBrand" Width="1.5" PointX="0.75" PointY="3.5" />
+        <EntityTypeShape EntityType="Model.FuelType" Width="1.5" PointX="3" PointY="6.375" />
+        <EntityTypeShape EntityType="Model.GearboxType" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="5.25" PointY="9.375" />
+        <EntityTypeShape EntityType="Model.UserType" Width="1.5" PointX="3" PointY="10.625" />
+        <EntityTypeShape EntityType="Model.Vehicle" Width="1.5" PointX="5.25" PointY="2.375" />
+        <AssociationConnector Association="Model.FK_Bookings_User" />
+        <AssociationConnector Association="Model.FK_Bookings_Vehicle" />
+        <AssociationConnector Association="Model.FK_BrandModels_CarBrands" />
+        <AssociationConnector Association="Model.FK_Vehicle_BrandModels" />
+        <AssociationConnector Association="Model.FK_Vehicle_CarBrands" />
+        <AssociationConnector Association="Model.FK_Vehicle_FuelType" />
+        <AssociationConnector Association="Model.FK_Vehicle_GearboxType" />
+        <AssociationConnector Association="Model.FK_User_UserType" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
